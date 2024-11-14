@@ -33,3 +33,12 @@ class BasicAuth(Auth):
             finally:
                 return decoded_str
         return None
+
+    def extract_user_credentials(
+            self, decoded_base64_authorization_header: str) -> (str, str):
+        """Extract email and password from decoded string"""
+        decoded_str = decoded_base64_authorization_header
+        if isinstance(decoded_str, str) and ':' in decoded_str:
+            email_password = decoded_str.split(':')
+            return email_password[0], email_password[1]
+        return None, None
