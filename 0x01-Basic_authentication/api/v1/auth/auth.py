@@ -18,7 +18,7 @@ class Auth:
         return path + "/"
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """A stub for the real documentation"""
+        """Check whether path is exluded from authorization"""
         if path and excluded_paths:
             slash_alternative = self.slash_handler(path)
             if path in excluded_paths or slash_alternative in excluded_paths:
@@ -26,7 +26,9 @@ class Auth:
         return True
 
     def authorization_header(self, request=None) -> str:
-        """A stub for the real documentation"""
+        """Validate the request object"""
+        if request and request.headers.get('Authorization'):
+            return request.headers.get('Authorization')
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
