@@ -34,8 +34,3 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         """A stub for the real documentation"""
         return None
-
-
-class BasicAuth(Auth):
-    """The basic authentication class"""
-    pass
