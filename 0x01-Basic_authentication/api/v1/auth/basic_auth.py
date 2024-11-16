@@ -8,6 +8,7 @@ import base64
 from typing import TypeVar
 from flask import request
 
+
 class BasicAuth(Auth):
     """The basic authentication class"""
 
@@ -49,7 +50,6 @@ class BasicAuth(Auth):
             self,
             user_email: str,
             user_pwd: str) -> TypeVar('User'):
-
         """Given credentials retrieve user from database"""
 
         condition = (
@@ -61,6 +61,7 @@ class BasicAuth(Auth):
         try:
             results = User.search({"email": user_email})
         except KeyError:
+            print('an exception occured')
             return None
         if results and len(results) > 0:
             user = results[0]
@@ -68,16 +69,18 @@ class BasicAuth(Auth):
                 return user
         return None
 
-
     def current_user(self, request=None) -> TypeVar('User'):
         """Retrieve current user"""
         user = None
         try:
             request_auth = self.authorization_header(request)
-            auth_header = self.extract_base64_authorization_header(request_auth)
-            decoded_header = self.decode_base64_authorization_header(auth_header)
-            email_pass = self. extract_user_credentials(decoded_header)
-            user = user_object_from_credentials(email_pass[0], email_pass[1])
-        except Exception:
-            pass
+            auth_header = self.extract_base64_authorization_header(
+                request_auth)
+            decoded_header = self.decode_base64_authorization_header(
+                auth_header)
+            email_pass = self.extract_user_credentials(decoded_header)
+            user = self.user_object_from_credentials(
+                email_pass[0], email_pass[1])
+        except Exception as e:
+            print(e)
         return user
