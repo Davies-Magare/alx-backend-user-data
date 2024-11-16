@@ -50,6 +50,8 @@ class BasicAuth(Auth):
             user_email: str,
             user_pwd: str) -> TypeVar('User'):
 
+        """Given credentials retrieve user from database"""
+
         condition = (
             user_email and isinstance(user_email, str) and
             user_pwd and isinstance(user_pwd, str)
