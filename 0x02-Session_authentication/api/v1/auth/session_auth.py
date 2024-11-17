@@ -30,3 +30,12 @@ class SessionAuth(Auth):
             return None
         user_id = SessionAuth.user_id_by_session_id.get(session_id)
         return user_id
+
+    def current_user(self, request=None):
+        """Return a user based on a cookie value"""
+        cookie = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(cookie)
+        from models.user import User
+        if User:
+            user = User.get(user_id)
+        return user
