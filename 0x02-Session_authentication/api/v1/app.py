@@ -28,7 +28,8 @@ elif auth_type == 'session_auth':
 path_list = [
     '/api/v1/status',
     'api/v1/unauthorized',
-    'api/v1/forbidden'
+    'api/v1/forbidden',
+    '/api/v1/auth_session/login/'
 ]
 
 
@@ -58,9 +59,11 @@ def verify_requests():
     """Verify the request
     """
     if auth and auth.require_auth(request.path, path_list):
-        if not auth.authorization_header(request):
+        print("yes")
+        if not auth.authorization_header(
+                request) and not auth.session_cookie(request):
             abort(401)
-        elif not auth.current_user(request):
+        if not auth.current_user(request):
             abort(403)
     request.current_user = auth.current_user(request)
 
