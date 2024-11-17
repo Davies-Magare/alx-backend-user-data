@@ -4,6 +4,7 @@ user authentication code"""
 
 from flask import request
 from typing import List, TypeVar
+from os import getenv
 
 
 class Auth:
@@ -34,3 +35,11 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         """A stub for the real documentation"""
         return None
+
+    def session_cookie(self, request=None):
+        """Return a cookie value from a request"""
+        if request is None:
+            return None
+        cookie_name = getenv('SESSION_NAME')
+        cookie = request.cookies.get(cookie_name)
+        return cookie
