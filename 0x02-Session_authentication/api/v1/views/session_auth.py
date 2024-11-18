@@ -6,8 +6,9 @@ from flask import jsonify, abort, request
 from api.v1.views import app_views
 import os
 
+
 @app_views.route(
-    '/auth_session/login', 
+    '/auth_session/login',
     methods=['POST'],
     strict_slashes=False)
 def session_auth():
@@ -19,7 +20,8 @@ def session_auth():
     elif not password:
         return jsonify({"error": "password missing"}), 400
     from models.user import User
-    user = User.search({"email": email})[0]
+    result = User.search({"email": email})
+    user = result[0] if result else None
     if not user:
         return jsonify({"error": "no user found for this email"}), 404
     if not user.is_valid_password(password):
@@ -29,7 +31,3 @@ def session_auth():
     ret_val = jsonify(user.to_json())
     ret_val.set_cookie(os.getenv('SESSION_NAME'), session_id)
     return ret_val
-
-
-
-    
