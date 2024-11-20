@@ -46,14 +46,13 @@ class DB:
         return user
 
     def find_user_by(self, **kwargs: Dict) -> User:
-    """Retrieve user from the database"""
-    session = self._session
-
-    # Attempt to get the user
-    user = session.query(User).filter_by(**kwargs).first()
-
-    # Raise NoResultFound if no user is found
-    if user is None:
-        raise NoResultFound
-
-    return user
+        """Retrieve user from the database"""
+        session = self._session
+        # validate kwargs dict
+        try:
+            user = session.query(User).filter_by(**kwargs).first()
+        except InvalidRequestError as e:
+            raise e
+        if user is None:
+            raise NoResultFound
+        return user
