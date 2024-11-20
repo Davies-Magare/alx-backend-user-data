@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-"""This module contains code a
-database mapping User
+"""Declare a sqlalchemy model "User" that maps
+a database table 'users'
 """
 
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (
+    Column,
     Integer,
     String,
-    ForeignKey,
-    Column
 )
-
-from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
