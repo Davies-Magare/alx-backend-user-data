@@ -4,10 +4,11 @@
 database operations
 """
 from sqlalchemy import create_engine
+from sqlalchemy.exc import NoResultFound, InvalidRequestError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-
+from typing import Dict
 from user import Base, User
 
 
@@ -32,14 +33,32 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email:str, hashed_password:str) -> User:
+    def add_user(self, email: str, hashed_password: str) -> User:
         """Save user to the database
         """
-        #valid_args = isinstance(email, str) and isinstance(
-            #hashed_password, str)
-        #if valid_args:
+        # valid_args = isinstance(email, str) and isinstance(
+        # hashed_password, str)
+        # if valid_args:
         user = User(email=email,
                     hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()
+        return user
+
+    def find_user_by(self, **kwargs: Dict) -> User:
+        """Retrieve user from the database"""
+        cols_list = [
+            "id",
+            "email",
+            "hashed_password",
+            "session_id",
+            "reset_token"
+        ]
+        # validate kwargs dict
+        for k, v in kwargs.items():
+            if k not in cols_list:
+                raise InvalidRequestError
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if user is None:
+            raise NoResultFound
         return user
