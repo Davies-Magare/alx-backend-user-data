@@ -50,7 +50,7 @@ class DB:
         session = self._session
         # validate kwargs dict
         try:
-            user = session.query(User).filter_by(**kwargs).first()
+            user = session.query(User).filter_by(**kwargs).one()
         except InvalidRequestError as e:
             raise e
         if user is None:
