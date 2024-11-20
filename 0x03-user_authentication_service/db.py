@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-"""DB module
+"""Declare a class to manage
+database operations
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -11,7 +12,7 @@ from user import Base, User
 
 
 class DB:
-    """DB class
+    """Class to manage database operations
     """
 
     def __init__(self) -> None:
