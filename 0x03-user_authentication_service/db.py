@@ -47,6 +47,7 @@ class DB:
 
     def find_user_by(self, **kwargs: Dict) -> User:
         """Retrieve user from the database"""
+        session = self._session
         cols_list = [
             "id",
             "email",
@@ -55,10 +56,10 @@ class DB:
             "reset_token"
         ]
         # validate kwargs dict
-        for k, v in kwargs.items():
-            if k not in cols_list:
-                raise InvalidRequestError
-        user = self._session.query(User).filter_by(**kwargs).first()
+        try:
+            user = session.query(User).filter_by(**kwargs).first()
+        except InvalidRequestError as e:
+            raise e
         if user is None:
             raise NoResultFound
         return user
