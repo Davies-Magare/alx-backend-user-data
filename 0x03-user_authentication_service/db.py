@@ -57,7 +57,7 @@ class DB:
             raise NoResultFound
         return user
 
-    def update_user(self, user_id: str, **kwargs: Dict[str, str]) -> None:
+    def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
         """
         Args:
             user_id
@@ -70,16 +70,13 @@ class DB:
         """
         session = self.__session
         try:
-            user = session.query(User).filter_by(id=user_id).first()
-            print(user.__dict__)
-            if user:
-                for key, value in kwargs.items():
-                    if hasattr(user, key):
-                        setattr(user, key, value)
-                    else:
-                        raise ValueError
-                session.add(user)
-                session.commit()
-        except Exception as e:
+            user = self.find_user_by(id=user_id)
+            for key, value in kwargs.items():
+                if hasattr(user, key):
+                    setattr(user, key, value)
+                else:
+                    raise ValueError
+        except Exception:
             raise ValueError
-        return None
+        session.add(user)
+        session.commit()
