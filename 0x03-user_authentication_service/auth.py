@@ -8,6 +8,8 @@ import bcrypt
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
+
+
 def _hash_password(password: str) -> AnyStr:
     """Encrypt a password using bcrypt"""
 
@@ -15,6 +17,7 @@ def _hash_password(password: str) -> AnyStr:
     salt = bcrypt.gensalt()
     hashed_pw = bcrypt.hashpw(byts, salt)
     return hashed_pw
+
 
 class Auth:
     """Auth class to interact with the authentication database.
@@ -24,7 +27,7 @@ class Auth:
         """class constructor"""
         self._db = DB()
 
-    def register_user(self, email:str, password:str) -> User:
+    def register_user(self, email: str, password: str) -> User:
         """Register user in database"""
         db = self._db
         if email and password:
@@ -38,5 +41,3 @@ class Auth:
                 return user
             except Exception as e:
                 raise e
-
-    
