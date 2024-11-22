@@ -69,7 +69,19 @@ class Auth:
         db = self._db
         try:
             user = db.find_user_by(email=email)
+            # print("in crt_session: ", user.__dict__)
             user.session_id = _generate_uuid()
         except Exception:
             return None
         return user.session_id
+
+    def get_user_from_session_id(self, session_id: str) -> User:
+        """Retrieve the user based on session_id"""
+        db = self._db
+        if session_id is None:
+            return None
+        try:
+            user = db.find_user_by(session_id=session_id)
+        except NoResultFound:
+            user = None
+        return user
