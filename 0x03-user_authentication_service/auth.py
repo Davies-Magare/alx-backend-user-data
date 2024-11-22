@@ -20,6 +20,11 @@ def _hash_password(password: str) -> AnyStr:
     return hashed_pw
 
 
+def _generate_uuid() -> str:
+    """Generate a string uuid"""
+    return str(uuid.uuid4())
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -57,7 +62,3 @@ class Auth:
             except NoResultFound:
                 pass
         return ret_value
-
-    def _generate_uuid(self) -> str:
-        """Return a string uuid"""
-        return str(uuid.uuid4())
