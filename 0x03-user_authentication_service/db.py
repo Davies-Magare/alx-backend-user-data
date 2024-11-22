@@ -80,3 +80,4 @@ class DB:
             raise ValueError
         session.add(user)
         session.commit()
+        return None
