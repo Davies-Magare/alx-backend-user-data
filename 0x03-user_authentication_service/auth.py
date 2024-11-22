@@ -5,6 +5,7 @@ Implement method for password hashing
 """
 from typing import AnyStr
 import bcrypt
+import uuid
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -56,3 +57,9 @@ class Auth:
             except NoResultFound:
                 pass
         return ret_value
+
+    def _generate_uuid(self):
+        """Return a string uuid"""
+        id = str(uuid.uuid4())
+        # print(type(id))
+        return id
