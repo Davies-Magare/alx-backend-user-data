@@ -45,13 +45,13 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs: Dict) -> User:
+    def find_user_by(self, **kwargs: Dict[str, str]) -> User:
         """Retrieve user from the database"""
         session = self._session
         # validate kwargs dict
         try:
             user = session.query(User).filter_by(**kwargs).one()
-        except Exception as e:
+        except Exceptioin as e:
             raise e
         if user is None:
             raise NoResultFound
