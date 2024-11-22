@@ -32,7 +32,7 @@ def register_user():
     if email and password:
         try:
             user = AUTH.register_user(email, password)
-            return jsonify({"email": f"{email}", "message": "user_created"})
+            return jsonify({"email": f"{email}", "message": "user_created"}), 200
         except ValueError:
             return jsonify({"message": "email already registered"}), 400
 
