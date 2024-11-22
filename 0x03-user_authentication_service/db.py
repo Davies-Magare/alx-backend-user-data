@@ -4,7 +4,7 @@
 database operations
 """
 from sqlalchemy import create_engine
-from sqlalchemy.exc import NoResultFound, InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
@@ -51,7 +51,7 @@ class DB:
         # validate kwargs dict
         try:
             user = session.query(User).filter_by(**kwargs).one()
-        except InvalidRequestError as e:
+        except Exception as e:
             raise e
         if user is None:
             raise NoResultFound
