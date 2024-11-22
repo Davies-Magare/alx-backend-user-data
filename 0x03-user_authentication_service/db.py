@@ -51,7 +51,7 @@ class DB:
         # validate kwargs dict
         try:
             user = session.query(User).filter_by(**kwargs).one()
-        except Exceptioin as e:
+        except Exception as e:
             raise e
         if user is None:
             raise NoResultFound
