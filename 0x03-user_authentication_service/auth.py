@@ -60,6 +60,4 @@ class Auth:
 
     def _generate_uuid(self) -> str:
         """Return a string uuid"""
-        id = uuid.uuid4()
-        # print(type(id))
-        return str(id)
+        return str(uuid.uuid4())
