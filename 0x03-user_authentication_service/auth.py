@@ -58,8 +58,8 @@ class Auth:
                 pass
         return ret_value
 
-    def _generate_uuid(self):
+    def _generate_uuid(self) -> str:
         """Return a string uuid"""
-        id = str(uuid.uuid4())
+        id = uuid.uuid4()
         # print(type(id))
-        return id
+        return str(id)
