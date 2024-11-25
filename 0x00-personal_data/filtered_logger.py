@@ -8,7 +8,7 @@ import re
 from typing import List
 
 
-PII_FIELDS = ('email', 'phone', 'password', 'ip', 'user-agent')
+PII_FIELDS = ('email', 'phone', 'password', 'ip', 'ssn')
 
 
 def filter_datum(
@@ -65,6 +65,7 @@ def get_logger() -> logging.Logger:
     """Create a logger object."""
 
     logger = logging.getLogger('user_data')
+    logger.propagate = False
     logger.setLevel(logging.INFO)
     handler = logging.StreamHandler()
     handler.setLevel(logging.INFO)
