@@ -4,6 +4,8 @@
 Obfuscate a log message string
 """
 import logging
+import mysql.connector
+import os
 import re
 from typing import List
 
@@ -74,3 +76,15 @@ def get_logger() -> logging.Logger:
 
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Create a connection to the database"""
+    connection = mysql.connector.connect(
+        host=os.environ.get('PERSONAL_DATA_DB_HOST'),
+        port=3306,
+        user=os.environ.get('PERSONAL_DATA_DB_USERNAME'),
+        password=os.environ.get('PERSONAL_DATA_DB_PASSWORD'),
+        database=os.environ.get('PERSONAL_DATA_DB_NAME')
+    )
+    return connection
